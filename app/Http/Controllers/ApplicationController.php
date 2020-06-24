@@ -36,7 +36,7 @@ class ApplicationController extends Controller
     private function store()
     {
         $this->vld();
-        $item = $this->builder()->newModelInstance(request()->only(array_keys($rules)));
+        $item = $this->builder()->newModelInstance(request()->only(array_keys($this->rules)));
         $item->save();
         return $this->viewOk('edit');
     }
