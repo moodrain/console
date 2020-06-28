@@ -16,10 +16,10 @@ class Controller extends BaseController
         return $this->validate(request(), $rules);
     }
 
-    protected function initAliClient()
+    protected function initAliClient($regionId = 'cn-hangzhou')
     {
         AlibabaCloud::accessKeyClient(config('aliyun.accessKeyId'), config('aliyun.accessKeySecret'))
-            ->regionId('cn-hangzhou')
+            ->regionId($regionId)
             ->asDefaultClient();
     }
 

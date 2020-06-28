@@ -18,4 +18,10 @@ Route::middleware(['api_token'])->namespace('Api')->group(function() {
 
     Route::post('wx/msg/send', 'WxSubscribeController@send');
 
+    Route::post('word/read', 'WordController@read');
+
+    Route::post('word/segment', 'WordController@segment');
+
 });
+
+

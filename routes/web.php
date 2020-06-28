@@ -29,3 +29,6 @@ Route::middleware(['auth'])->group(function() {
     Route::post('wx-msg-temp/destroy', 'WxMsgTempController@destroy');
 
 });
+
+Route::view('wr/gui', 'word.read');
+Route::get('wr/{text?}', 'Api\WordController@read');
