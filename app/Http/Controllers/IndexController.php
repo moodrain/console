@@ -6,6 +6,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $key = request('genKey') ? bcrypt(config('app.api_key')) : null;
+        return $this->view('index', ['key' => $key]);
     }
 }

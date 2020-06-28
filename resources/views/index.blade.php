@@ -4,12 +4,17 @@
 
 @section('main')
     <el-row>
-        <el-col :xs="{span:18,offset:3}" :lg="{span:8,offset:8}">
+        <el-col :xs="24" :lg="8">
             <br />
             <el-card>
                 <br />
                 <p>Greeting {{ user()->name }}</p>
-                <br />
+                <el-divider></el-divider>
+                @if($key)
+                    <el-button class="clipboard-btn" icon="el-icon-document" data-clipboard-text="{{ $key }}"></el-button>
+                @else
+                    <el-button @click="$to({genKey: true})">Generate Key</el-button>
+                @endif
             </el-card>
         </el-col>
     </el-row>

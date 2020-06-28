@@ -21,4 +21,6 @@ Route::middleware(['auth'])->group(function() {
     Route::any('json-storage/edit', 'JsonStorageController@edit');
     Route::post('json-storage/destroy', 'JsonStorageController@destroy');
 
+    Route::get('log/list', 'LogController@list');
+
 });

@@ -14,4 +14,6 @@ Route::middleware(['api_token'])->namespace('Api')->group(function() {
     Route::post('sms/captcha/send', 'SMSController@sendCaptcha');
     Route::post('sms/captcha/verify', 'SMSController@verifyCaptcha');
 
+    Route::any('log', 'LogController@log');
+
 });

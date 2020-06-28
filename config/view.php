@@ -2,6 +2,20 @@
 
 return [
 
+    // 0 => index, 1 => name, 2 => url/submenu
+    'nav' => [
+        ['index', 'Dashboard', ''],
+        ['application', 'Application', [
+            ['application-list', 'App List', 'application/list'],
+            ['application-edit', 'App Edit', 'application/edit'],
+        ]],
+        ['json-storage', 'Json Storage', [
+            ['json-storage-list', 'Json List', 'json-storage/list'],
+            ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
+        ]],
+        ['log-list', 'Log', 'log/list'],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | View Storage Paths

@@ -14,7 +14,7 @@
 
                     <el-menu style="height: 100%;width: max-content" :default-active="menuActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" mode="horizontal">
 
-                        @include('layout.frame-aside')
+                        @include('layout.frame-nav')
 
                         <el-submenu index="user">
                             <template slot="title">{{ user()->name }}</template>
@@ -46,7 +46,7 @@
                             <p style="color: white;font-size: 1.4em;width: 100%;text-align: center;user-select: none">{{ env('APP_NAME') }}</p>
                         </el-container>
 
-                        @include('layout.frame-aside')
+                        @include('layout.frame-nav')
 
                     </el-menu>
 
