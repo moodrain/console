@@ -5,6 +5,7 @@ return [
     // 0 => index, 1 => name, 2 => url/submenu
     'nav' => [
         ['index', 'Dashboard', ''],
+        ['log-list', 'Log', 'log/list'],
         ['application', 'Application', [
             ['application-list', 'App List', 'application/list'],
             ['application-edit', 'App Edit', 'application/edit'],
@@ -13,7 +14,6 @@ return [
             ['json-storage-list', 'Json List', 'json-storage/list'],
             ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
         ]],
-        ['log-list', 'Log', 'log/list'],
         ['wx-msg-temp', 'Wx Msg Temp', [
             ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
             ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
