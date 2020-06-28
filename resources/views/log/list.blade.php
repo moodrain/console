@@ -6,7 +6,7 @@
     <el-card>
         <el-form inline>
             <x-input exp="model:search.id;pre:ID" />
-            <x-input exp="model:search.name;pre:Name" />
+            <x-input exp="model:search.note;pre:Note" />
             <x-select exp="model:search.applicationId;label:Application;data:applications;key:id;selectLabel:name;value:id" />
             <x-sort />
             <x-list-head-btn :m="$m" />

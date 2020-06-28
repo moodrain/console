@@ -22,5 +22,10 @@ Route::middleware(['auth'])->group(function() {
     Route::post('json-storage/destroy', 'JsonStorageController@destroy');
 
     Route::get('log/list', 'LogController@list');
+    Route::post('log/destroy', 'LogController@destroy');
+
+    Route::get('wx-msg-temp/list', 'WxMsgTempController@list');
+    Route::any('wx-msg-temp/edit', 'WxMsgTempController@edit');
+    Route::post('wx-msg-temp/destroy', 'WxMsgTempController@destroy');
 
 });

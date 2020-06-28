@@ -14,6 +14,10 @@ return [
             ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
         ]],
         ['log-list', 'Log', 'log/list'],
+        ['wx-msg-temp', 'Wx Msg Temp', [
+            ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
+            ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
+        ]],
     ],
 
     /*

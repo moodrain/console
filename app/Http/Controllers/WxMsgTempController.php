@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Validation\Rule;
 
-class JsonStorageController extends Controller
+class WxMsgTempController extends Controller
 {
 
-    protected $model = 'json_storage';
+    protected $model = 'wx_msg_temp';
 
     public function list()
     {
@@ -21,12 +21,11 @@ class JsonStorageController extends Controller
             $isUpdate = request()->filled('id');
             $this->rules = [
                 'applicationId' => 'required|exists:applications,id',
+                'tempId' => 'required',
                 'dataJson' => 'required|json',
-                'token' => '',
+                'mapJson' => 'required|json',
+                'name' => 'required',
             ];
-            $this->rules['name'] = $isUpdate
-                ? ['required', Rule::unique($this->table())->ignore(request('id'))]
-                : 'required|unique:' . $this->table();
             $isUpdate && $this->rules['id'] = 'exists:' . $this->table();
             $this->vld();
             return request('id') ? $this->update() : $this->store();

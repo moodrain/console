@@ -30,6 +30,11 @@
 
         @isset($type)
             type="{{ $type }}"
+
+            @if($type == 'textarea')
+                autosize
+            @endif
+
         @endisset
 
         @isset($disabled)
