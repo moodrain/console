@@ -20,7 +20,7 @@ class JsonStorageController extends Controller
         if (request()->isMethod('post')) {
             $isUpdate = request()->filled('id');
             $this->rules = [
-                'applicationId' => 'exists:applications,id',
+                'applicationId' => 'nullable|exists:applications,id',
                 'dataJson' => 'required|json',
             ];
             $this->rules['name'] = $isUpdate
