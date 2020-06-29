@@ -38,7 +38,7 @@ class JsonStorageController extends Controller
     {
         $this->vld();
         $data = request()->only(array_keys($this->rules));
-        $data['applicationId'] = $data['applicationId'] ?? 0;
+        $data['applicationId'] = request('applicationId', 0);
         $item = $this->builder()->newModelInstance($data);
         $item->save();
         return $this->viewOk('edit');
@@ -49,7 +49,7 @@ class JsonStorageController extends Controller
         $this->vld();
         $item = $this->builder()->find(request('id'));
         $data = request()->only(array_keys($this->rules));
-        $data['applicationId'] = $data['applicationId'] ?? 0;
+        $data['applicationId'] = request('applicationId', 0);
         $item->fill($data);
         $item->save();
         return $this->viewOk('edit', ['d' => $item]);
