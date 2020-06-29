@@ -17,8 +17,8 @@ class CreateWxMiniProgramsTable extends Migration
             $table->id();
             $table->integer('application_id')->nullable();
             $table->string('appid');
-            $table->string('appsecret');
-            $table->string('access_token');
+            $table->string('appsecret')->nullable();
+            $table->string('access_token')->nullable();
             $table->integer('access_token_expires_at');
             $table->timestamps();
         });
