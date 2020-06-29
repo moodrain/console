@@ -6,7 +6,7 @@ class WxMiniProgram extends Model
 {
     public static $searchRule = [
         'id' => '=',
-        'applicationId' => '=',
+        'applicationId/d' => '=',
         'appid' => '=',
     ];
     public static $sortRule = ['id', 'applicationId'];

@@ -6,7 +6,7 @@ class Log extends Model
 {
     public static $searchRule = [
         'id' => '=',
-        'applicationId' => '=',
+        'applicationId/d' => '=',
         'content' => 'like',
         'note' => 'like',
     ];

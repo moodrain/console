@@ -20,8 +20,8 @@
             <el-table-column prop="application.name" label="Application"></el-table-column>
             <el-table-column label="Content">
                 <template slot-scope="scope">
-                    <p v-if="scope.row.content.length > 256" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">@{{ scope.row.content }}</p>
-                    <p v-if="scope.row.content.length <= 256">@{{ scope.row.content }}</p>
+                    <p v-if="scope.row.content && scope.row.content.length > 256" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">@{{ scope.row.content }}</p>
+                    <p v-if="! scope.row.content || scope.row.content.length <= 256">@{{ scope.row.content }}</p>
                 </template>
             </el-table-column>
             <el-table-column prop="note" label="Note"></el-table-column>

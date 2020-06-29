@@ -11,6 +11,7 @@ class Builder extends LaravelBuilder {
     {
         ! $rules && $rules = get_class_vars(get_class($this->model))['searchRule'];
         foreach ($rules as $name => $type) {
+            $name = explode('/', $name)[0];
             if (isset($queries[$name])) {
                 $value =  $queries[$name];
                 if (in_array($type, ['=', '>', '<', '>=', '<=', '<>', '!='])) {

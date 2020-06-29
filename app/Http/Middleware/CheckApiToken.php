@@ -10,12 +10,17 @@ class CheckApiToken
     public function handle(Request $request, Closure $next)
     {
         $token = $request->input('token') ?? $request->header('token');
-        if ($token == config('app.api_token')) {
+        $apiToken = config('app.api_token');
+        if ($token == $apiToken) {
             return $next($request);
         }
-        if (decrypt($token) === config('app.api_token')) {
+        if (decrypt($token) === $apiToken) {
             return $next($request);
         }
-        abort(403);
+        return response()->json([
+            'data' => null,
+            'msg' => 'Forbidden',
+            'code' => 403,
+        ], 403);
     }
 }

@@ -6,7 +6,7 @@ class WxMsgTemp extends Model
 {
     public static $searchRule = [
         'id' => '=',
-        'applicationId' => '=',
+        'applicationId/d' => '=',
         'tempId' => '=',
     ];
     public static $sortRule = ['id', 'applicationId'];
