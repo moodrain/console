@@ -34,5 +34,5 @@ Route::middleware(['auth'])->group(function() {
 
 });
 
-Route::view('wr/gui', 'word.read');
-Route::get('wr/{text?}', 'Api\WordController@read');
+Route::view('wr/gui', 'word.read')->withoutMiddleware('web');
+Route::get('wr/{text?}', 'Api\WordController@read')->withoutMiddleware('web');
