@@ -13,7 +13,7 @@ class CheckApiToken
         if ($token == config('app.api_token')) {
             return $next($request);
         }
-        if (password_verify(config('app.api_token'), $token)) {
+        if (decrypt($token) === config('app.api_token')) {
             return $next($request);
         }
         abort(403);
