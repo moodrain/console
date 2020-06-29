@@ -18,7 +18,6 @@ class CreateJsonStoragesTable extends Migration
             $table->integer('application_id')->default(0);
             $table->string('name');
             $table->json('data');
-            $table->string('token')->nullable();
             $table->string('note')->nullable();
             $table->unique(['application_id', 'name']);
             $table->timestamps();

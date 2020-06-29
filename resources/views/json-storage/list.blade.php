@@ -20,7 +20,6 @@
         <el-table-column prop="application.name" label="Application"></el-table-column>
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="dataJson" label="dataJson"></el-table-column>
-        <el-table-column prop="token" label="Token"></el-table-column>
         <el-table-column prop="updatedAt" label="updatedAt" width="160"></el-table-column>
         <el-table-column prop="createdAt" label="CreatedAt" width="160"></el-table-column>
         <x-list-body-col :m="$m" />

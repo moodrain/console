@@ -9,7 +9,6 @@
                 <el-form label-width="80px">
                     <x-edit-id :d="$d"></x-edit-id>
                     <x-input exp="model:form.name;label:Name"></x-input>
-                    <x-input exp="model:form.token;label:Token"></x-input>
                     <x-select exp="model:form.applicationId;label:Application;data:applications;key:id;selectLabel:name;value:id" />
                     <x-input exp="model:form.dataJson;label:dataJson;type:textarea"></x-input>
                     <x-input exp="model:form.note;label:Note"></x-input>
