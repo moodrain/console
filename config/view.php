@@ -4,7 +4,7 @@ return [
 
     // 0 => index, 1 => name, 2 => url/submenu
     'nav' => [
-        ['index', 'Dashboard', ''],
+        ['dashboard', 'Dashboard', ''],
         ['log-list', 'Log', 'log/list'],
         ['application', 'Application', [
             ['application-list', 'App List', 'application/list'],
