@@ -39,7 +39,7 @@ class JsonStorageController extends Controller
         $this->validate(request(), [
             'name' => 'required',
             'key' => 'required',
-            'number' => 'required',
+            'number' => '',
         ]);
         $applicationId = request('applicationId', 0);
         $json = JsonStorage::query()->where('application_id', $applicationId)->where('name', request('name'))->first();
@@ -47,7 +47,7 @@ class JsonStorageController extends Controller
             return rs(null, 'json not found', 1);
         }
         $data = $json->data;
-        $data[request('key')] = isset($data[request('key')]) ? $data[request('key')] + request('number') : (int) request('number');
+        $data[request('key')] = isset($data[request('key')]) ? $data[request('key')] + request('number', 1) : (int) request('number', 1);
         $json->data = $data;
         $json->save();
         return rs();

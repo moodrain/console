@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -57,7 +58,10 @@ class Handler extends ExceptionHandler
             if ($exception instanceof ValidationException) {
                 $data = $exception->errors();
             }
-            return rs($data, $exception->getMessage(), 1);
+            if ($exception instanceof NotFoundHttpException) {
+                return rs(null, 'Not Found', 404);
+            }
+            return rs($data, $exception->getMessage() ?? 'Unknown Message', 1);
         }
         return parent::render($request, $exception);
     }
