@@ -20,7 +20,7 @@ class JsonStorageController extends Controller
         if (request()->isMethod('post')) {
             $isUpdate = request()->filled('id');
             $this->rules = [
-                'applicationId' => 'required|exists:applications,id',
+                'applicationId' => 'exists:applications,id',
                 'dataJson' => 'required|json',
                 'token' => '',
             ];
@@ -37,7 +37,9 @@ class JsonStorageController extends Controller
     private function store()
     {
         $this->vld();
-        $item = $this->builder()->newModelInstance(request()->only(array_keys($this->rules)));
+        $data = request()->only(array_keys($this->rules));
+        $data['applicationId'] = $data['applicationId'] ?? 0;
+        $item = $this->builder()->newModelInstance($data);
         $item->save();
         return $this->viewOk('edit');
     }
@@ -46,7 +48,9 @@ class JsonStorageController extends Controller
     {
         $this->vld();
         $item = $this->builder()->find(request('id'));
-        $item->fill(request()->only(array_keys($this->rules)));
+        $data = request()->only(array_keys($this->rules));
+        $data['applicationId'] = $data['applicationId'] ?? 0;
+        $item->fill($data);
         $item->save();
         return $this->viewOk('edit', ['d' => $item]);
     }
