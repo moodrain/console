@@ -22,7 +22,6 @@ class JsonStorageController extends Controller
             $this->rules = [
                 'applicationId' => 'exists:applications,id',
                 'dataJson' => 'required|json',
-                'token' => '',
             ];
             $this->rules['name'] = $isUpdate
                 ? ['required', Rule::unique($this->table())->ignore(request('id'))]

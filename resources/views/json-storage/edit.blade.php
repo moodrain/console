@@ -29,9 +29,8 @@
                 form: {
                     id: {{ bv('id', null) }},
                     name: '{{ bv('name') }}',
-                    token: '{{ bv('token') }}',
                     dataJson: '{!! bv('dataJson') !!}',
-                    applicationId: {{ bv('id', null) }},
+                    applicationId: {{ bv('applicationId', null) }},
                     note: '{{ bv('note') }}',
                 },
                 applications: @json(\App\Models\Application::query()->get(['id', 'name'])),

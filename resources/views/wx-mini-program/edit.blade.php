@@ -29,7 +29,7 @@
                     id: {{ bv('id', null) }},
                     appid: '{{ bv('appid') }}',
                     appsecret: '{{ bv('appsecret') }}',
-                    applicationId: {{ bv('id', null) }},
+                    applicationId: {{ bv('applicationId', null) }},
                 },
                 applications: @json(\App\Models\Application::query()->get(['id', 'name'])),
             }
