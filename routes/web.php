@@ -28,6 +28,10 @@ Route::middleware(['auth'])->group(function() {
     Route::any('wx-msg-temp/edit', 'WxMsgTempController@edit');
     Route::post('wx-msg-temp/destroy', 'WxMsgTempController@destroy');
 
+    Route::get('wx-mini-program/list', 'WxMiniProgramController@list');
+    Route::any('wx-mini-program/edit', 'WxMiniProgramController@edit');
+    Route::post('wx-mini-program/destroy', 'WxMiniProgramController@destroy');
+
 });
 
 Route::view('wr/gui', 'word.read');

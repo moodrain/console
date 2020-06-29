@@ -14,6 +14,10 @@ return [
             ['json-storage-list', 'Json List', 'json-storage/list'],
             ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
         ]],
+        ['wx-mini-program', 'Wx Mini Program', [
+            ['wx-mini-program-list', 'MP List', 'wx-mini-program/list'],
+            ['wx-mini-program-edit', 'MP Edit', 'wx-mini-program/edit'],
+        ]],
         ['wx-msg-temp', 'Wx Msg Temp', [
             ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
             ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],

@@ -16,7 +16,7 @@ Route::middleware(['api_token'])->namespace('Api')->group(function() {
 
     Route::post('log', 'LogController@log');
 
-    Route::post('wx/msg/send', 'WxSubscribeController@send');
+    Route::post('wx/msg/send', 'WxSubscribeMsgController@send');
 
     Route::post('word/read', 'WordController@read');
 

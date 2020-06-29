@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-class WxMsgTempController extends Controller
+
+class WxMiniProgramController extends Controller
 {
 
-    protected $model = 'wx_msg_temp';
+    protected $model = 'wx_mini_program';
 
     public function list()
     {
@@ -19,10 +20,8 @@ class WxMsgTempController extends Controller
             $isUpdate = request()->filled('id');
             $this->rules = [
                 'applicationId' => 'required|exists:applications,id',
-                'tempId' => 'required',
-                'dataJson' => 'required|json',
-                'mapJson' => 'required|json',
-                'name' => 'required',
+                'appid' => 'required',
+                'appsecret' => 'required'
             ];
             $isUpdate && $this->rules['id'] = 'exists:' . $this->table();
             $this->vld();

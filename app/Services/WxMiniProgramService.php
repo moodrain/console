@@ -13,6 +13,10 @@ class WxMiniProgramService
     public function accessToken($applicationId)
     {
         $mp = WxMiniProgram::query()->where('application_id', $applicationId)->first();
+        if (! $mp) {
+            $this->errMsg = 'mp not found';
+            return false;
+        }
         if ($mp->access_token_expires_at > time()) {
             return $mp->access_token;
         }

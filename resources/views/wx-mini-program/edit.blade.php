@@ -8,11 +8,9 @@
             <el-card>
                 <el-form label-width="80px">
                     <x-edit-id :d="$d"></x-edit-id>
-                    <x-input exp="model:form.name;label:Name"></x-input>
-                    <x-input exp="model:form.tempId;label:TemplateId"></x-input>
+                    <x-input exp="model:form.appid;label:Appid"></x-input>
+                    <x-input exp="model:form.appsecret;label:Appsecret"></x-input>
                     <x-select exp="model:form.applicationId;label:Application;data:applications;key:id;selectLabel:name;value:id" />
-                    <x-input exp="model:form.dataJson;label:dataJson;type:textarea"></x-input>
-                    <x-input exp="model:form.mapJson;label:mapJson;type:textarea"></x-input>
                     <x-edit-submit :d="$d"></x-edit-submit>
                 </el-form>
             </el-card>
@@ -29,10 +27,8 @@
                 @include('piece.edit-data')
                 form: {
                     id: {{ bv('id', null) }},
-                    name: '{{ bv('name') }}',
-                    tempId: '{{ bv('tempId') }}',
-                    dataJson: '{!! bv('dataJson') !!}',
-                    mapJson: '{!! bv('mapJson') !!}',
+                    appid: '{{ bv('appid') }}',
+                    appsecret: '{{ bv('appsecret') }}',
                     applicationId: {{ bv('id', null) }},
                 },
                 applications: @json(\App\Models\Application::query()->get(['id', 'name'])),
