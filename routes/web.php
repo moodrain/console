@@ -2,15 +2,39 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/login', 'user.login')->name('login');
-//Route::view('register', 'user.register');
-Route::post('login', 'UserController@login');
-//Route::post('register', 'UserController@register');
+if (env('ICP')) {
+    Route::view('/login', 'icp.login')->name('login');
+    //Route::view('register', 'user.register');
+    Route::post('login', 'ICPController@login');
+    //Route::post('register', 'UserController@register');
+} else {
+    Route::view('/login', 'user.login')->name('login');
+    //Route::view('register', 'user.register');
+    Route::post('login', 'UserController@login');
+    //Route::post('register', 'UserController@register');
+}
+
+Route::prefix('oa')->group(function() {
+
+    Route::get('qq', 'OAController@qq');
+
+    Route::prefix('callback')->group(function() {
+
+        Route::get('qq/{application}', 'OAController@qqCallback');
+
+    });
+
+});
 
 
 Route::middleware(['auth'])->group(function() {
 
-    Route::get('/', 'IndexController@index');
+    if (env('ICP')) {
+        Route::get('/', 'IndexController@index');
+    } else {
+        Route::view('/', 'icp.index');
+    }
+
     Route::post('logout', 'UserController@logout');
 
     Route::get('application/list', 'ApplicationController@list');

@@ -18,7 +18,7 @@
 
                         <el-submenu index="user">
                             <template slot="title">{{ user()->name }}</template>
-                            <a href="javascript:" onclick="confirm('Sure to Logout ?') && document.querySelector('#logout').submit()"><el-menu-item index="user-logout">Logout</el-menu-item></a>
+                            <a href="javascript:" onclick="document.querySelector('#logout').submit()"><el-menu-item index="user-logout">Logout</el-menu-item></a>
                         </el-submenu>
 
                     </el-menu>
@@ -59,7 +59,7 @@
                         <el-dropdown style="float: right">
                             <p style="cursor: pointer;color: #fff">{{ user()->name }} <i class="el-icon-arrow-down el-icon--right"></i></p>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item><a href="javascript:" onclick="confirm('Sure to Logout ?') && document.querySelector('#logout').submit()">Logout</a></el-dropdown-item>
+                                <el-dropdown-item><a href="javascript:" onclick="document.querySelector('#logout').submit()">Logout</a></el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
 

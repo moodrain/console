@@ -22,4 +22,9 @@ class Application extends Model
         return $this->hasMany(WxMsgTemp::class);
     }
 
+    public function qqConnectApp()
+    {
+        return $this->hasOne(QqConnectApp::class);
+    }
+
 }

@@ -19,12 +19,12 @@ class Model extends LaravelModel
 
     public function getAttribute($key)
     {
-        return parent::getAttribute(Str::snake($key));
+        return parent::getAttribute(in_array($key, $this->with) ? $key : Str::snake($key));
     }
 
     public function setAttribute($key, $value)
     {
-        return parent::setAttribute(Str::snake($key), $value);
+        return parent::setAttribute(in_array($key, $this->with) ? $key : Str::snake($key), $value);
     }
 
     public function attributesToArray()

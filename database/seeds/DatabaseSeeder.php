@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'application_id' => 1,
             'name' => 'app-1-json',
-            'token' => 'app-1-token',
             'data' => ['visit' => 2, 'click' => 1],
             'note' => 'app-1-note',
         ]);

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Login')
+@section('title', '登录')
 @section('html')
     <div id="app">
         <br />
@@ -7,12 +7,14 @@
             <el-col :xs="{span:20,offset:2}" :lg="{span:6,offset:9}">
                 <el-card>
                     <el-form>
-                        <x-input exp="model:form.email;pre:Email"></x-input>
-                        <x-input exp="model:form.password;pre:Password;type:password"></x-input>
+                        <x-input exp="model:form.email;pre:邮箱"></x-input>
+                        <x-input exp="model:form.password;pre:密码;type:password"></x-input>
                         <el-form-item>
-                            <el-button @click="login">Login</el-button>
-                            <el-divider direction="vertical"></el-divider>
-                            <el-link href="/register">or Register</el-link>
+                            <el-button @click="login">登录</el-button>
+                            <el-divider>其他方式登录</el-divider>
+                            <el-button size="small" @click="qq">
+                                <el-image src="/qq.png" fit="contain" style="width: 30px;height: 30px;"></el-image>
+                            </el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -26,9 +28,9 @@
     <script>
         let vue = new Vue({
             el: '#app',
-            data() {
+            data () {
                 return {
-                    @include('piece.data')
+                    @component('piece.data')@endcomponent
                     form: {
                         email: '{{ old('email') }}',
                         password: '',
@@ -36,16 +38,19 @@
                 }
             },
             methods: {
-                @include('piece.method')
+                @component('piece.method')@endcomponent
                 login() {
                     if (! this.form.email || ! this.form.password) {
                         return
                     }
                     $submit(this.form)
+                },
+                qq() {
+                    window.open("/oa/qq", "TencentLogin", "width=450,height=320,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1")
                 }
             },
             mounted() {
-                @include('piece.init')
+                @component('piece.init')@endcomponent
             }
         })
         $enter(() => vue.login())
