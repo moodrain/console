@@ -41,7 +41,7 @@ let vue = new Vue({
             menuActive: 'cdn',
             form: {
                 url: '{{ bv('url') }}',
-                isDir: {{ bv('isDir', null) ? 'true' : 'false' }}
+                isDir: {{ bv('isDir', false) ? 'true' : 'false' }}
             },
             result: `{!! $result ?? '' !!}`,
         }
