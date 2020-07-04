@@ -1,6 +1,6 @@
 @extends('layout.frame')
 
-@section('title', 'CDN')
+@section('title', 'DNS')
 
 @section('main')
     <el-row>
@@ -38,11 +38,12 @@ let vue = new Vue({
     data() {
         return {
             @include('piece.data')
-            menuActive: 'cdn',
-            applications: @json(\App\Models\Application::query()->get(['id', 'name'])),
+            menuActive: 'dns',
             form: {
-                url: '{{ bv('url') }}',
-                isDir: {{ bv('isDir', null) ? 'true' : 'false' }}
+                domain: '',
+                putRecord: {
+
+                }
             },
             result: `{!! $result ?? '' !!}`,
         }

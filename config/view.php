@@ -23,6 +23,7 @@ return [
             ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
         ]],
         ['cdn', 'CDN', 'cdn/refresh'],
+        ['dns', 'DNS', 'dns/put'],
     ],
 
     /*

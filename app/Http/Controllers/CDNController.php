@@ -28,7 +28,7 @@ class CDNController extends Controller
                 ])->request();
             $result = $result->toArray();
             $result = json_encode($result, 128|256);
-            return $this->viewOk('cdn.index', ['result' => $result, 'd' => $data]);
+            return $this->viewOk('cdn.refresh', ['result' => $result, 'd' => $data]);
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
         }

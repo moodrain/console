@@ -15,5 +15,4 @@ api server for
 
 * oa middleware
 * oss browser
-* cdn refresh
 * dns explain
