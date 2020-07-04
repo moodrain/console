@@ -22,6 +22,7 @@ return [
             ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
             ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
         ]],
+        ['cdn', 'CDN', 'cdn/refresh'],
     ],
 
     /*

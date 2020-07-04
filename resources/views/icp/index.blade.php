@@ -6,6 +6,10 @@ if (request('oa')) {
         session()->put('name', $oaData['nickname']);
     }
 }
+if (! session('name')) {
+    echo '<script>window.location.href="/login"</script>';
+    exit;
+}
 @endphp
 
 @extends('layout.app')
@@ -24,8 +28,8 @@ if (request('oa')) {
             <el-dropdown style="float: right">
 
                 <p style="cursor: pointer;color: #fff">
-                    <el-avatar :size="40" src="{{ session('avatar', '/avatar.jpg') }}" fit="contain" style="position: relative;top: 10px;right: 10px"></el-avatar>
-                    <span>{{ session('name', '新用户') }} <i class="el-icon-arrow-down el-icon--right"></i></span>
+                    <el-avatar :size="40" src="{{ session('avatar') }}" fit="contain" style="position: relative;top: 10px;right: 10px"></el-avatar>
+                    <span>{{ session('name') }} <i class="el-icon-arrow-down el-icon--right"></i></span>
                 </p>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item><a href="javascript:" onclick="document.querySelector('#logout').submit()">登出</a></el-dropdown-item>

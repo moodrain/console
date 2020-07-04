@@ -4,15 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 if (env('ICP')) {
     Route::view('/login', 'icp.login')->name('login');
-    //Route::view('register', 'user.register');
-    Route::post('login', 'ICPController@login');
-    //Route::post('register', 'UserController@register');
+    Route::view('/', 'icp.index');
 } else {
     Route::view('/login', 'user.login')->name('login');
-    //Route::view('register', 'user.register');
-    Route::post('login', 'UserController@login');
-    //Route::post('register', 'UserController@register');
 }
+Route::post('login', 'UserController@login');
 
 Route::prefix('oa')->group(function() {
 
@@ -29,11 +25,8 @@ Route::prefix('oa')->group(function() {
 
 Route::middleware(['auth'])->group(function() {
 
-    if (env('ICP')) {
-        Route::get('/', 'IndexController@index');
-    } else {
-        Route::view('/', 'icp.index');
-    }
+    ! env('ICP') && Route::get('/', 'IndexController@index');
+
 
     Route::post('logout', 'UserController@logout');
 
@@ -55,6 +48,9 @@ Route::middleware(['auth'])->group(function() {
     Route::get('wx-mini-program/list', 'WxMiniProgramController@list');
     Route::any('wx-mini-program/edit', 'WxMiniProgramController@edit');
     Route::post('wx-mini-program/destroy', 'WxMiniProgramController@destroy');
+
+    Route::view('cdn/refresh', 'cdn.index');
+    Route::post('cdn/refresh', 'CDNController@refresh');
 
 });
 

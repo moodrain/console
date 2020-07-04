@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use AlibabaCloud\Client\AlibabaCloud;
 use App\Models\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -101,6 +102,13 @@ class Controller extends BaseController
     protected function backErr($errMsg)
     {
         return redirect()->back()->withInput()->withErrors(__($errMsg));
+    }
+
+    protected function initAliClient($regionId = 'cn-hangzhou')
+    {
+        AlibabaCloud::accessKeyClient(config('aliyun.accessKeyId'), config('aliyun.accessKeySecret'))
+            ->regionId($regionId)
+            ->asDefaultClient();
     }
 
 }
