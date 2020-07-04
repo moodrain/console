@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 if (env('ICP')) {
     Route::view('/login', 'icp.login')->name('login');
-    Route::view('/', 'icp.index');
+    Route::any('/', function() { return view('icp.index'); });
 } else {
     Route::view('/login', 'user.login')->name('login');
 }
