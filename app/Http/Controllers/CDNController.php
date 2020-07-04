@@ -17,11 +17,11 @@ class CDNController extends Controller
         $data['isDir'] && ! str_ends_with($data['url'], '/') && ($data['url'] .= '/');
         $this->initAliClient();
         try {
-            $result = AlibabaCloud::rpc()->product('Cdn')->version('2018-05-10')->method('POST')->host('cdn.aliyuncs.com')
+            $result = AlibabaCloud::rpc()->product('Cdn')->scheme('https')->version('2018-05-10')->method('POST')->host('cdn.aliyuncs.com')
                 ->action('RefreshObjectCaches')
                 ->options([
                     'query' => [
-                        'RegionId' => "cn-hangzhou",
+                        'RegionId' => 'cn-hangzhou',
                         'ObjectPath' => $data['url'],
                         'ObjectType' => $data['isDir'] ? 'Directory' : 'File',
                     ],

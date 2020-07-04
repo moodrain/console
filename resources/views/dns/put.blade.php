@@ -7,13 +7,14 @@
         <el-col :xs="{span:22,offset:1}" :lg="8">
             <el-card>
 
-                <el-form label-width="80px">
-                    <x-input exp="model:form.url;label:Url"></x-input>
+                <el-form>
+
+                    <x-input exp="model:form.domain;pre:Domain"></x-input>
+                    <x-input exp="model:form.rr;pre:RR"></x-input>
+                    <x-input exp="model:form.value;pre:Value"></x-input>
+                    <x-select exp="model:form.type;data:types;label:Type"></x-select>
                     <el-form-item>
-                        <el-switch v-model="form.isDir" active-text="目录" inactive-text="文件"></el-switch>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button @click="$submit('/cdn/refresh', form)">Refresh</el-button>
+                        <el-button @click="$submit(form)">Put</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -40,11 +41,12 @@ let vue = new Vue({
             @include('piece.data')
             menuActive: 'dns',
             form: {
-                domain: '',
-                putRecord: {
-
-                }
+                domain: '{{ bv('domain') }}',
+                rr: '{{ bv('rr') }}',
+                type: '{{ bv('type', 'A') }}',
+                value: '{{ bv('value') }}',
             },
+            types: ['A', 'NS', 'MX', 'TXT', 'CNAME', 'SRV', 'AAAA', 'CAA', 'REDIRECT_URL', 'FORWARD_URL'],
             result: `{!! $result ?? '' !!}`,
         }
     },
@@ -55,5 +57,6 @@ let vue = new Vue({
         @include('piece.init')
     }
 })
+$enter(() => $submit(vue.form))
 </script>
 @endsection

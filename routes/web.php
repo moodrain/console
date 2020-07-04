@@ -49,8 +49,11 @@ Route::middleware(['auth'])->group(function() {
     Route::any('wx-mini-program/edit', 'WxMiniProgramController@edit');
     Route::post('wx-mini-program/destroy', 'WxMiniProgramController@destroy');
 
-    Route::view('cdn/refresh', 'cdn.index');
+    Route::view('cdn/refresh', 'cdn.refresh');
     Route::post('cdn/refresh', 'CDNController@refresh');
+
+    Route::view('dns/put', 'dns.put');
+    Route::post('dns/put', 'DNSController@put');
 
 });
 

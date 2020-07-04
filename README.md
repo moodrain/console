@@ -15,4 +15,3 @@ api server for
 
 * oa middleware
 * oss browser
-* dns explain
