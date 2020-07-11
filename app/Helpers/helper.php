@@ -35,6 +35,15 @@ if (! function_exists('rs'))
         return response()->json(compact('code', 'msg', 'data'));
     }
 }
+
+if (! function_exists('ers'))
+{
+    function ers($msg = '', $code = 1, $data = [])
+    {
+        return response()->json(compact('code', 'msg', 'data'));
+    }
+}
+
 if (! function_exists('errBack'))
 {
     function errBack($msg)
@@ -100,7 +109,7 @@ if (! function_exists('ext'))
     function ext($path)
     {
         $info = pathinfo($path);
-        return $info['extension'] ?? null;
+        return empty($info['extension']) ? null : strtolower($info['extension']);
     }
 }
 
@@ -119,15 +128,19 @@ if (! function_exists('bv')) {
         if(is_string($objOrProp)) {
             $prop = $objOrProp;
             $default === null && $default = 'null';
+            $return = $default;
             if (! $obj) {
-                return old($prop) ?? $default;
+                $return = old($prop) ?? $default;
             }
             if (is_object($obj)) {
-                return old($prop) ?? $obj->$prop ?? $default;
+                $return = old($prop) ?? $obj->$prop ?? $default;
             } elseif (is_array($obj)) {
-                return old($prop) ?? $obj[$prop] ?? $default;
+                $return = old($prop) ?? $obj[$prop] ?? $default;
             }
-            return $default;
+            if ($return instanceof \Illuminate\Support\Collection || $return instanceof \Illuminate\Database\Eloquent\Collection) {
+                return $return->pluck('id')->all();
+            }
+            return $return;
         }
         $obj = $objOrProp;
     }
@@ -140,5 +153,21 @@ if (! function_exists('sendMail'))
         \Illuminate\Support\Facades\Mail::html($content, function(\Illuminate\Mail\Message $msg) use ($to, $subject) {
             $msg->to($to)->subject($subject);
         });
+    }
+}
+
+if (! function_exists('startWith'))
+{
+    function startWith($start, $str)
+    {
+        return mb_substr($str, 0, 1) == $start ? $str : ($start . $str);
+    }
+}
+
+if (! function_exists('endWith'))
+{
+    function endWith($end, $str)
+    {
+        return mb_substr($str, mb_strlen($str) - 1, 1) == $end ? $str : ($str . $end);
     }
 }
