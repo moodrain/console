@@ -55,6 +55,16 @@ Route::middleware(['auth'])->group(function() {
     Route::view('dns/put', 'dns.put');
     Route::post('dns/put', 'DNSController@put');
 
+    Route::get('oss-bucket/list', 'OssBucketController@list');
+    Route::post('oss-bucket/create', 'OssBucketController@create');
+    Route::post('oss-bucket/drop', 'OssBucketController@drop');
+    Route::post('oss-bucket/acl', 'OssBucketController@acl');
+    Route::post('oss-bucket/refresh', 'OssBucketController@refresh');
+
+    Route::get('oss/list', 'OssController@list');
+    Route::any('oss/edit', 'OssController@edit');
+
+
 });
 
 Route::view('wr/gui', 'word.read')->withoutMiddleware('web');

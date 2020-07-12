@@ -10,6 +10,11 @@ return [
             ['application-list', 'App List', 'application/list'],
             ['application-edit', 'App Edit', 'application/edit'],
         ]],
+        ['oss', 'OSS', [
+            ['oss-list', 'OSS List', 'oss/list'],
+            ['oss-edit', 'OSS Edit', 'oss/edit'],
+            ['oss-bucket-list', 'OSS Bucket', 'oss-bucket/list'],
+        ]],
         ['json-storage', 'Json Storage', [
             ['json-storage-list', 'Json List', 'json-storage/list'],
             ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
