@@ -32,7 +32,9 @@ class OssController extends Controller
 
     public function edit()
     {
-
+        if (request()->isMethod('get')) {
+            return $this->view('edit');
+        }
     }
 
     private $oss;

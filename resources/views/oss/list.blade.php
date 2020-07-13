@@ -31,6 +31,7 @@
         <el-table-column prop="name" label="File"></el-table-column>
         <el-table-column label="Operation">
             <template slot-scope="scope">
+                <el-button icon="el-icon-view" @click="view(scope.row)"></el-button>
                 <el-button icon="el-icon-edit" @click="edit(scope.row)"></el-button>
                 <el-button icon="el-icon-delete" @click="delete(scope.row)"></el-button>
             </template>
@@ -65,17 +66,20 @@
 
             },
             add() {
-
+                this.$to('/oss/edit', {bucket: this.search.bucket, path: this.search.path + '/'})
             },
-            edit() {
-
+            edit(file) {
+                this.$to('/oss/edit', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
             },
             delete() {
 
             },
             pendDir(dir) {
-                this.search.path += ('/' + dir.name)
+                this.search.path += (this.search.path ? ('/' + dir.name) : dir.name)
                 this.doSearch()
+            },
+            view(dir) {
+                window.open('http://' + this.search.bucket + '.{{ config('aliyun.oss.endpoint') }}/' + this.search.path + '/' + dir.name)
             }
         },
         mounted() {
