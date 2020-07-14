@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function() {
 
     Route::get('oss/list', 'OssController@list');
     Route::any('oss/edit', 'OssController@edit');
+    Route::any('oss/delete', 'OssController@delete');
     Route::post('oss/upload', 'OssController@upload');
 
 

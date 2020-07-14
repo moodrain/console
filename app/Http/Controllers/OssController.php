@@ -17,7 +17,11 @@ class OssController extends Controller
            'path' => '',
         ]);
         if (! cache('oss-bucket')) {
-            cache()->set('oss-bucket', $this->oss->buckets());
+            try {
+                cache()->set('oss-bucket', $this->oss->buckets());
+            } catch (\Exception $e) {
+                return $this->backErr($e->getMessage());
+            }
         }
         $directories = request('bucket') ? $this->oss->directories(request('bucket'), request('path')) : [];
         $files = request('bucket') ? $this->oss->files(request('bucket'), request('path')) : [];
@@ -64,6 +68,20 @@ class OssController extends Controller
         } catch (\Exception $e) {
             unlink($file->getRealPath());
             return ers($e->getMessage());
+        }
+    }
+
+    public function delete()
+    {
+        $this->validate(request(), [
+            'file' => 'required',
+            'bucket' => 'required',
+        ]);
+        try {
+            $this->oss->delete(request('bucket'), request('file'));
+            return $this->backOk();
+        } catch (\Exception $e) {
+            return $this->backErr($e->getMessage());
         }
     }
 

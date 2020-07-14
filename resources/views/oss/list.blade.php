@@ -33,7 +33,7 @@
             <template slot-scope="scope">
                 <el-button icon="el-icon-view" @click="view(scope.row)"></el-button>
                 <el-button icon="el-icon-edit" @click="edit(scope.row)"></el-button>
-                <el-button icon="el-icon-delete" @click="delete(scope.row)"></el-button>
+                <el-button icon="el-icon-delete" @click="remove(scope.row)"></el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -63,7 +63,7 @@
                 this.$to(this.search)
             },
             refreshBucket() {
-
+                this.$submit('/oss-bucket/refresh')
             },
             add() {
                 this.$to('/oss/edit', {bucket: this.search.bucket, path: this.search.path + '/'})
@@ -71,8 +71,10 @@
             edit(file) {
                 this.$to('/oss/edit', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
             },
-            delete() {
-
+            remove(file) {
+                if (confirm('Confirm to Delete')) {
+                    this.$submit('/oss/delete', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
+                }
             },
             pendDir(dir) {
                 this.search.path += (this.search.path ? ('/' + dir.name) : dir.name)
