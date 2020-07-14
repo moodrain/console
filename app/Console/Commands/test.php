@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Services\OssService;
 use Illuminate\Console\Command;
 
 class test extends Command
@@ -12,8 +11,6 @@ class test extends Command
 
     public function handle()
     {
-        $oss = new OssService();
-        $rs = $oss->directories('moodrain', 'bookmark');
-        print_r($rs);
+
     }
 }

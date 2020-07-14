@@ -8,19 +8,22 @@
         <el-card>
             <el-form>
                 <x-select exp="model:form.bucket;label:Bucket;data:buckets" />
-                <x-input exp="model:form.path;pre:Path" />
+                <x-input exp="model:form.path;label:Path" />
+                <el-form-item label="Content">
+                    <el-input type="textarea" :autosize="{minRows:2,maxRows:20}" v-model="form.content" ></el-input>
+                </el-form-item>
                 <el-form-item>
-                    <el-button @click="save">保存文件</el-button>
+                    <el-button @click="save">{{ request('file') ? 'Save' : 'Create' }}</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-upload
-                            :action="uploadAction"
-                            :on-success="uploadOk"
-                            :show-file-list="false"
-                            :with-credentials="true"
-                            :before-upload="uploadCheck"
+                        :action="uploadAction"
+                        :on-success="uploadOk"
+                        :show-file-list="false"
+                        :with-credentials="true"
+                        :before-upload="uploadCheck"
                     >
-                        <el-button slot="trigger">上传文件</el-button>
+                        <el-button slot="trigger">Upload File</el-button>
                     </el-upload>
                 </el-form-item>
             </el-form>
@@ -35,19 +38,25 @@ new Vue({
     el: '#app',
     data() {
         return {
+            menuActive: 'oss-edit',
             @include('piece.data')
             buckets: @json(cache('oss-bucket', [])),
             form: {
                 bucket: '{{ old('bucket') ?? request('bucket') }}',
                 path: '{{ old('path') ?? request('file') ?? request('path') }}',
-                content: btoa('{{ request('file') ? base64_encode((new \App\Services\OssService())->get(request('bucket'), request('file'))) : '' }}'),
-            }
+                content: atob('{{ request('file') ? base64_encode((new \App\Services\OssService())->get(request('bucket'), request('file'))) : '' }}'),
+            },
         }
     },
     methods: {
         @include('piece.method')
-        uploadOk() {
-            this.$notify({message: 'Success'})
+        uploadOk(rs) {
+            if (rs.code === 0) {
+                this.$notify({message: 'Success', type: 'success'})
+                this.form.content = rs.data
+            } else {
+                this.$notify({message: rs.msg, type: 'warning'})
+            }
         },
         uploadCheck() {
             if (! (this.form.bucket && this.form.path)) {
@@ -68,7 +77,7 @@ new Vue({
     computed: {
         uploadAction: {
             get() {
-                return 'oss/upload?bucket' + this.form.bucket + '&path=' + this.form.path
+                return '/oss/upload?bucket=' + this.form.bucket + '&path=' + this.form.path
             }
         }
     }

@@ -50,6 +50,11 @@ class OssService
         self::$oss->putObject($bucket, $file, $content);
     }
 
+    public function putFromFile($bucket, $path, $file)
+    {
+        self::$oss->uploadFile($bucket, $path, $file);
+    }
+
     public function get($bucket, $file)
     {
         return self::$oss->getObject($bucket, $file);

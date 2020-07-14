@@ -35,6 +35,36 @@ class OssController extends Controller
         if (request()->isMethod('get')) {
             return $this->view('edit');
         }
+        $this->validate(request(), [
+            'path' => 'required',
+            'bucket' => 'required',
+            'content' => 'required',
+        ]);
+        try {
+            $this->oss->put(request('bucket'), request('path'), request('content'));
+            return $this->backOk();
+        } catch (\Exception $e) {
+            return $this->backErr($e->getMessage());
+        }
+    }
+
+    public function upload()
+    {
+        $this->validate(request(), [
+            'file' => 'file',
+            'path' => 'required',
+            'bucket' => 'required',
+        ]);
+        $file = request()->file('file');
+        $content = file_get_contents($file->getRealPath());
+        try {
+            $this->oss->putFromFile(request('bucket'), request('path'), $file->getRealPath());
+            unlink($file->getRealPath());
+            return rs($content);
+        } catch (\Exception $e) {
+            unlink($file->getRealPath());
+            return ers($e->getMessage());
+        }
     }
 
     private $oss;
