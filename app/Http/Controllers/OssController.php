@@ -63,7 +63,7 @@ class OssController extends Controller
         $content = file_get_contents($file->getRealPath());
         try {
             $this->oss->putFromFile(request('bucket'), request('path'), $file->getRealPath());
-            return rs($content);
+            return rs(ctype_print($content) ? $content : null);
         } catch (\Exception $e) {
             return ers($e->getMessage());
         }
