@@ -71,11 +71,15 @@ class ApplicationController extends Controller
     {
         $this->validate(request(), ['id' => 'required|exists:' . $this->table()]);
         $application = Application::query()->find(request('id'));
-        expIf(! $application->localPath, 'application local path not set');
-        expIf(! chdir($application->localPath), 'chdir failed');
-        exec('git pull', $output, $code);
-        expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
-        return $this->backOk();
+        try {
+            expIf(! $application->localPath, 'application local path not set');
+            expIf(! chdir($application->localPath), 'chdir failed');
+            exec('git pull', $output, $code);
+            expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
+            return $this->backOk();
+        } catch (\Exception $e) {
+            return $this->backErr($e->getMessage());
+        }
     }
 
 }
