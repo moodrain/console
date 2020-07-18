@@ -11,8 +11,14 @@
                     <x-input exp="model:form.name;label:Name"></x-input>
                     <x-input exp="model:form.site;label:Site"></x-input>
                     <x-input exp="model:form.detail;label:Detail"></x-input>
+                    <x-input exp="model:form.repository;label:Repository"></x-input>
+                    <x-input exp="model:form.localPath;label:LocalPath"></x-input>
                     <x-edit-submit :d="$d"></x-edit-submit>
                 </el-form>
+            </el-card>
+
+            <el-card v-if="form.localPath" style="margin-top: 20px">
+                <el-button @click="$submit('/application/deploy', {id: form.id})">Deploy</el-button>
             </el-card>
         </el-col>
     </el-row>
@@ -30,6 +36,8 @@
                     name: '{{ bv('name') }}',
                     site: '{{ bv('site') }}',
                     detail: '{{ bv('detail') }}',
+                    repository: '{{ bv('repository') }}',
+                    localPath: '{{ str_replace('\\', '\\\\', bv('localPath')) }}',
                 },
             }
         },

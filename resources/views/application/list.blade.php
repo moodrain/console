@@ -20,6 +20,8 @@
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="detail" label="Detail"></el-table-column>
         <el-table-column prop="site" label="Site"></el-table-column>
+        <el-table-column prop="repository" label="Repository"></el-table-column>
+        <el-table-column prop="localPath" label="localPath"></el-table-column>
         <el-table-column prop="updatedAt" label="updatedAt" width="160"></el-table-column>
         <el-table-column prop="createdAt" label="CreatedAt" width="160"></el-table-column>
         <x-list-body-col :m="$m" />

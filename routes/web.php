@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('application/list', 'ApplicationController@list');
     Route::any('application/edit', 'ApplicationController@edit');
     Route::post('application/destroy', 'ApplicationController@destroy');
+    Route::post('application/deploy', 'ApplicationController@deploy');
 
     Route::get('json-storage/list', 'JsonStorageController@list');
     Route::any('json-storage/edit', 'JsonStorageController@edit');

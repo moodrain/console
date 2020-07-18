@@ -18,6 +18,8 @@ class CreateApplicationsTable extends Migration
             $table->string('name')->unique();
             $table->text('detail')->nullable();
             $table->string('site')->nullable();
+            $table->string('repository')->nullable();
+            $table->string('local_path')->nullable();
             $table->timestamps();
         });
     }

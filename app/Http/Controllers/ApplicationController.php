@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use Illuminate\Validation\Rule;
 
 class ApplicationController extends Controller
@@ -22,6 +23,8 @@ class ApplicationController extends Controller
             $this->rules = [
                 'detail' => '',
                 'site' => '',
+                'repository' => '',
+                'localPath' => '',
             ];
             $this->rules['name'] = $isUpdate
                 ? ['required', Rule::unique($this->table())->ignore(request('id'))]
@@ -61,6 +64,17 @@ class ApplicationController extends Controller
         $ids = request('ids') ?? [];
         request('id') && $ids[] = request('id');
         $this->builder()->whereIn('id', $ids)->delete();
+        return $this->backOk();
+    }
+
+    public function deploy()
+    {
+        $this->validate(request(), ['id' => 'required|exists:' . $this->table()]);
+        $application = Application::query()->find(request('id'));
+        expIf(! $application->localPath, 'application local path not set');
+        expIf(! chdir($application->localPath), 'chdir failed');
+        exec('git pull', $output, $code);
+        expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
         return $this->backOk();
     }
 
