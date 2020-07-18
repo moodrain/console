@@ -7,11 +7,16 @@ api server for
 * json storage
 * log
 * send weixin subscribe message
-* call aliyun text to sound
-* call aliyun word segment
-* and more ...
+* aliyun text to sound
+* aliyun word segment
+* oss manager
+* cdn refresher
 
 #### todo
 
+git deploy
+
+#### abandoned
+
 * oa middleware
-* oss browser
+> need financial company accounts
