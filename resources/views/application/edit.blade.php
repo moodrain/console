@@ -17,7 +17,7 @@
                 </el-form>
             </el-card>
 
-            <el-card v-if="form.localPath" style="margin-top: 20px">
+            <el-card v-if="form.id && form.localPath" style="margin-top: 20px">
                 <el-button @click="$submit('/application/deploy', {id: form.id})">Deploy</el-button>
             </el-card>
         </el-col>
