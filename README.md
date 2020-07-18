@@ -11,10 +11,11 @@ api server for
 * aliyun word segment
 * oss manager
 * cdn refresher
+* git deploy
 
 #### todo
 
-git deploy
+* wait your advice
 
 #### abandoned
 
