@@ -75,7 +75,7 @@ class ApplicationController extends Controller
             expIf(! $application->localPath, 'application local path not set');
             expIf(! chdir($application->localPath), 'chdir failed');
             exec('git pull', $output, $code);
-            expIf($code !== 0, 'git pull failed, return code: ' . $code . ' : ' . join(PHP_EOL, $output));
+            expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
             return $this->backOk();
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
