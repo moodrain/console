@@ -22,6 +22,8 @@ Route::middleware(['api_token'])->namespace('Api')->group(function() {
 
     Route::post('word/segment', 'WordController@segment');
 
+    Route::any('notify/{name?}', 'NotifyController@notify');
+
 });
 
 

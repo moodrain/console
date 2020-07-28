@@ -10,12 +10,14 @@ class CheckApiToken
     public function handle(Request $request, Closure $next)
     {
         $token = $request->input('token') ?? $request->header('token');
-        $apiToken = config('app.api_token');
-        if ($token == $apiToken) {
-            return $next($request);
-        }
-        if (decrypt($token) === $apiToken) {
-            return $next($request);
+        if ($token) {
+            $apiToken = config('app.api_token');
+            if ($token == $apiToken) {
+                return $next($request);
+            }
+            if (decrypt($token) === $apiToken) {
+                return $next($request);
+            }
         }
         return response()->json([
             'data' => null,
