@@ -27,11 +27,16 @@ class WordController extends Controller
             'speechRate' => 'int|between:-500,500',
             'pitchRate' => 'int|between:-500,500',
         ]);
-        $key = 'aliNlsToken_' . config('aliyun.ttsAppKey');
-        $token = cache($key);
+        $voiceKey = 'aliTts:' . md5($text);
+        $tokenKey = 'aliNlsToken_' . config('aliyun.ttsAppKey');
+        $voice = cache($voiceKey);
+        if ($voice) {
+            return response($voice)->header('Content-Type', mimetype_from_extension(request('format', 'mp3')));
+        }
+        $token = cache($tokenKey);
         if (! $token) {
-            $lock = Cache::lock($key, 10);
-            if ($lock->get()) {
+//            $lock = Cache::lock($tokenKey, 10);
+//            if ($lock->get()) {
                 $this->initAliClient('cn-shanghai');
                 $rs = AlibabaCloud::nlsCloudMeta()
                     ->v20180518()
@@ -42,9 +47,9 @@ class WordController extends Controller
                     return rs(null, 'request a token from ali failed', 1);
                 }
                 $token = $tokenInfo['Id'];
-                cache()->set($key, $token, $tokenInfo['ExpireTime'] - time());
-                $lock->release();
-            }
+                cache()->set($tokenKey, $token, $tokenInfo['ExpireTime'] - time());
+//                $lock->release();
+//            }
         }
         $rs = Http::asJson()->post('https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/tts', [
             'appkey' => config('aliyun.ttsAppKey'),
@@ -56,6 +61,7 @@ class WordController extends Controller
             'speech_rate' => request('speech_rate', 0),
             'pitch_rate' => request('pitch_rate', 0),
         ]);
+        cache()->set($voiceKey, $rs->body(), 86400 * 7);
         return response($rs->body())->header('Content-Type', mimetype_from_extension(request('format', 'mp3')));
     }
 

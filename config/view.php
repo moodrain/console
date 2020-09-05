@@ -5,16 +5,18 @@ return [
     // 0 => index, 1 => name, 2 => url/submenu
     'nav' => [
         ['dashboard', 'Dashboard', ''],
-        ['log-list', 'Log', 'log/list'],
         ['application', 'Application', [
             ['application-list', 'App List', 'application/list'],
             ['application-edit', 'App Edit', 'application/edit'],
         ]],
+        ['dns', 'DNS', 'dns/put'],
         ['oss', 'OSS', [
             ['oss-list', 'OSS List', 'oss/list'],
             ['oss-edit', 'OSS Edit', 'oss/edit'],
             ['oss-bucket-list', 'OSS Bucket', 'oss-bucket/list'],
         ]],
+        ['cdn', 'CDN', 'cdn/refresh'],
+        ['log-list', 'Log', 'log/list'],
         ['json-storage', 'Json Storage', [
             ['json-storage-list', 'Json List', 'json-storage/list'],
             ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
@@ -27,8 +29,7 @@ return [
             ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
             ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
         ]],
-        ['cdn', 'CDN', 'cdn/refresh'],
-        ['dns', 'DNS', 'dns/put'],
+        ['word-read', 'Word Read', 'wr/gui']
     ],
 
     /*
