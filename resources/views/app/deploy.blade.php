@@ -28,7 +28,7 @@
                     @include('piece.data')
                     menuActive: 'app-deploy',
                     form: {
-                        url: '{{ request('path') }}',
+                        url: '{{ old('path') ?? $path ?? '' }}',
                     },
                 }
             },

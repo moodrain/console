@@ -15,7 +15,7 @@ class ApplicationController extends Controller
             expIf(! chdir($path), 'path not-found');
             exec('git pull', $output, $code);
             expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
-            return $this->backOk();
+            return $this->viewOk('app.deploy', ['path' => request('path')]);
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
         }
