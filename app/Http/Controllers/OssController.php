@@ -2,50 +2,55 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Services\OssService;
+use Illuminate\Support\Str;
 
 class OssController extends Controller
 {
-
-    protected $model = 'oss';
-
     public function list()
     {
         $this->validate(request(), [
-           'bucket' => '',
-           'path' => '',
+            'bucket' => '',
+            'path' => '',
         ]);
-        if (! cache('oss-bucket')) {
-            try {
-                cache()->set('oss-bucket', $this->oss->buckets());
-            } catch (\Exception $e) {
-                return $this->backErr($e->getMessage());
+        $bucketInfos = $this->oss->buckets();
+        if (! $bucketInfos) {
+            return $this->view('oss.list', ['directories' => [], 'files' => [], 'buckets' => [], 'bucket' => '', 'endpoint' => '']);
+        }
+        $buckets = array_map(function($e) {
+            return $e->getName();
+        }, $bucketInfos);
+        $bucket = request('bucket', $buckets[0]);
+        foreach ($bucketInfos as $bucketInfo) {
+            if ($bucketInfo->getName() == $bucket) {
+                $endpoint = $bucketInfo->getExtranetEndpoint();
             }
         }
-        $directories = request('bucket') ? $this->oss->directories(request('bucket'), request('path')) : [];
-        $files = request('bucket') ? $this->oss->files(request('bucket'), request('path')) : [];
+        $directories = $this->oss->directories($bucket, request('path'));
+        $files = $this->oss->files($bucket, request('path'));
         for ($i = 0; $i < count($directories); $i++) {
             $directories[$i] = ['name' => $directories[$i]];
         }
         for ($i = 0; $i < count($files); $i++) {
             $files[$i] = ['name' => $files[$i]];
         }
-        return $this->view('list', compact('directories', 'files'));
+        return $this->view('oss.list', compact('directories', 'files', 'buckets', 'bucket', 'endpoint'));
     }
 
     public function edit()
     {
         if (request()->isMethod('get')) {
-            return $this->view('edit');
+            return $this->view('oss.edit');
         }
         $this->validate(request(), [
             'path' => 'required',
             'bucket' => 'required',
             'content' => 'required',
         ]);
+        $path = request('path');
+        Str::startsWith($path, '/') && $path = mb_substr($path, 1);
         try {
-            $this->oss->put(request('bucket'), request('path'), request('content'));
+            $this->oss->put(request('bucket'), $path, request('content'));
             return $this->backOk();
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
@@ -61,34 +66,38 @@ class OssController extends Controller
         ]);
         $file = request()->file('file');
         $content = file_get_contents($file->getRealPath());
+        $path = request('path');
+        Str::startsWith($path, '/') && $path = mb_substr($path, 1);
         try {
-            $this->oss->putFromFile(request('bucket'), request('path'), $file->getRealPath());
+            $this->oss->putFromFile(request('bucket'), $path, $file->getRealPath());
             return rs(ctype_print($content) ? $content : null);
         } catch (\Exception $e) {
             return ers($e->getMessage());
         }
     }
 
-    public function delete()
+    public function destroy()
     {
         $this->validate(request(), [
             'file' => 'required',
             'bucket' => 'required',
         ]);
+        $file = request('file');
+        Str::startsWith($file, '/') && $file = mb_substr($file, 1);
         try {
-            $this->oss->delete(request('bucket'), request('file'));
+            $this->oss->delete(request('bucket'), $file);
             return $this->backOk();
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
         }
     }
 
+
     private $oss;
 
-    public function __construct()
+    public function __construct(OssService $oss)
     {
         parent::__construct();
-        $this->oss = new OssService();
+        $this->oss = $oss;
     }
-
 }

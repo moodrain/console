@@ -2,78 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Application;
-use Illuminate\Validation\Rule;
-
 class ApplicationController extends Controller
 {
-
-    protected $model = 'application';
-
-    public function list()
-    {
-        $builder = $this->mSearch($this->builder());
-        return $this->view('list', ['l' => $builder->paginate()]);
-    }
-
-    public function edit()
-    {
-        if (request()->isMethod('post')) {
-            $isUpdate = request()->filled('id');
-            $this->rules = [
-                'detail' => '',
-                'site' => '',
-                'repository' => '',
-                'localPath' => '',
-            ];
-            $this->rules['name'] = $isUpdate
-                ? ['required', Rule::unique($this->table())->ignore(request('id'))]
-                : 'required|unique:' . $this->table();
-            $isUpdate && $this->rules['id'] = 'exists:' . $this->table();
-            $this->vld();
-            return request('id') ? $this->update() : $this->store();
-        }
-        return $this->view('edit', ['d' => request('id') ? $this->builder()->find(request('id')) : null]);
-    }
-
-    private function store()
-    {
-        $this->vld();
-        $item = $this->builder()->newModelInstance(request()->only(array_keys($this->rules)));
-        $item->save();
-        return $this->viewOk('edit');
-    }
-
-    private function update()
-    {
-        $this->vld();
-        $item = $this->builder()->find(request('id'));
-        $item->fill(request()->only(array_keys($this->rules)));
-        $item->save();
-        return $this->viewOk('edit', ['d' => $item]);
-    }
-
-    public function destroy()
-    {
-        $this->rules = [
-            'id' => 'required_without:ids|exists:' . $this->table(),
-            'ids' => 'required_without:id|array',
-            'ids.*' => 'exists:' . $this->table() . ',id',
-        ];
-        $this->vld();
-        $ids = request('ids') ?? [];
-        request('id') && $ids[] = request('id');
-        $this->builder()->whereIn('id', $ids)->delete();
-        return $this->backOk();
-    }
-
     public function deploy()
     {
-        $this->validate(request(), ['id' => 'required|exists:' . $this->table()]);
-        $application = Application::query()->find(request('id'));
+        if (request()->isMethod('get')) {
+            return $this->view('app.deploy');
+        }
+        $this->vld(['path' => 'required']);
+        $path = request('path');
         try {
-            expIf(! $application->localPath, 'application local path not set');
-            expIf(! chdir($application->localPath), 'chdir failed');
+            expIf(! chdir($path), 'path not-found');
             exec('git pull', $output, $code);
             expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
             return $this->backOk();
@@ -81,5 +20,4 @@ class ApplicationController extends Controller
             return $this->backErr($e->getMessage());
         }
     }
-
 }

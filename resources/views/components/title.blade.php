@@ -1,0 +1,1 @@
+<title>{{ ____($slot) }}</title>

@@ -1,12 +1,17 @@
 @extends('layout.frame')
 
-@include('piece.list-title')
+@section('title', 'OSS list')
 
 @section('main')
 
 <el-card>
+    <el-breadcrumb separator="/">
+        <el-breadcrumb-item @click.native="breadTo(index)" style="cursor: pointer;font-size: 1.15em" v-for="(item, index) in pathArr" :key="index">@{{ item }}</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-divider></el-divider>
     <el-form inline>
-        <x-select exp="model:search.bucket;label:Bucket;data:buckets" />
+        <el-form-item><el-button icon="el-icon-back" @click="parentPath"></el-button></el-form-item>
+        <x-select exp="model:search.bucket;data:buckets;change:toBucket" />
         <x-input exp="model:search.path;pre:Path" />
         <el-button icon="el-icon-search" @click="doSearch"></el-button>
         <el-button icon="el-icon-plus" @click="add"></el-button>
@@ -49,12 +54,13 @@
                 @include('piece.data')
                 directories: @json($directories),
                 files: @json($files),
-                buckets: @json(cache('oss-bucket', [])),
+                buckets: @json($buckets),
                 menuActive: 'oss-list',
                 search: {
-                    bucket: '{{ request('bucket') }}',
+                    bucket: '{{ $bucket }}',
                     path: '{{ request('path') }}',
-                }
+                },
+                path: '{{ request('path') }}',
             }
         },
         methods: {
@@ -72,20 +78,41 @@
                 this.$to('/oss/edit', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
             },
             remove(file) {
-                if (confirm('Confirm to Delete')) {
-                    this.$submit('/oss/delete', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
-                }
+                this.$confirm('{{ ___('confirm') }}').then(() => {
+                    this.$submit('/oss/destroy', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
+                }).catch(() => {})
             },
             pendDir(dir) {
                 this.search.path += (this.search.path ? ('/' + dir.name) : dir.name)
                 this.doSearch()
             },
             view(dir) {
-                window.open('http://' + this.search.bucket + '.{{ config('aliyun.oss.endpoint') }}/' + this.search.path + '/' + dir.name)
+                window.open('http://' + this.search.bucket + '.{{ $endpoint }}/' + this.search.path + '/' + dir.name)
+            },
+            breadTo(index) {
+                this.$to('/oss/list', {path: this.pathArr.slice(1, index + 1).join('/')})
+            },
+            parentPath() {
+                let pathPieces = this.path.split('/')
+                if (pathPieces.length < 1) {
+                    return
+                }
+                let parentPath = pathPieces.slice(0, pathPieces.length - 1).join('/')
+                this.$to({path: parentPath})
+            },
+            toBucket(bucket) {
+                this.$to('/oss/list', {bucket}, true)
             }
         },
         mounted() {
             @include('piece.init')
+        },
+        computed: {
+            pathArr: {
+                get() {
+                    return ['root'].concat(this.path.split('/'))
+                }
+            },
         }
     })
 </script>

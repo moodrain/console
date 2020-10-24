@@ -114,11 +114,18 @@ class OssService
     {
         if (! self::$buckets) {
             $buckets = self::$oss->listBuckets()->getBucketList();
-            foreach($buckets as $bucket) {
-                self::$buckets[] = $bucket->getName();
-            }
+            self::$buckets[] = $buckets;
+            return $buckets;
         }
         return self::$buckets;
+    }
+
+    public function client($endpoint = null)
+    {
+        if ($endpoint) {
+            return new OssClient(config('aliyun.accessKeyId'), config('aliyun.accessKeySecret'), $endpoint);
+        }
+        return self::$oss;
     }
 
 }

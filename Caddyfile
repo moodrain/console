@@ -5,3 +5,7 @@ localhost:8000 {
         to {path} {path}/ /index.php?{query}
     }
 }
+
+localhost:8000/lib {
+    proxy / http://s1.moodrain.cn/lib
+}

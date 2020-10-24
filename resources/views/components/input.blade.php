@@ -1,55 +1,69 @@
 @php(extract(bladeIncludeExp($exp ?? '')))
 <el-form-item
 
-    @isset($if)
+        @isset($if)
         v-if="{{ $if }}"
-    @endisset
+        @endisset
 
-    @isset($class)
+        @isset($class)
         class="{{ $class }}"
-    @endisset
+        @endisset
 
-    @isset($label)
-        label="{{ $label }}"
-    @endisset
+        @isset($label)
+        label="{{ ____($label) }}"
+        @endisset
 
 >
-    <el-input
+        <el-input
 
-        @isset($ref)
-            ref="{{ $ref }}"
-        @endisset
+                @isset($ref)
+                ref="{{ $ref }}"
+                @endisset
 
-        @isset($model)
-            v-model="{{ $model }}"
-        @endisset
+                @isset($model)
+                v-model="{{ $model }}"
+                @endisset
 
-        @isset($value)
-            :value="{{ $value }}"
-        @endisset
+                @isset($value)
+                :value="{{ $value }}"
+                @endisset
 
-        @isset($type)
-            type="{{ $type }}"
+                @isset($type)
+                type="{{ $type }}"
 
-            @if($type == 'textarea')
-                autosize
-            @endif
+                @if($type == 'textarea')
+                        @isset($row)
+                                :rows="{{ $row }}"
+                        @else
+                                autosize
+                        @endisset
+                @endif
 
-        @endisset
 
-        @isset($disabled)
-            disabled
-        @endisset
 
-        @isset($change)
-            @change="{{ $change }}"
-        @endisset
+                @endisset
 
-    >
+                @isset($disabled)
+                disabled
+                @endisset
 
-        @isset($pre)
-            <template slot="prepend">{{ $pre }}</template>
-        @endisset
+                @isset($readonly)
+                readonly
+                @endisset
 
-    </el-input>
+                @isset($change)
+                @change="{{ $change }}"
+                @endisset
+
+                @isset($holder)
+                placeholder="{{ $holder }}"
+                @endisset
+
+        >
+
+                @isset($pre)
+                        <template slot="prepend">{{ ____($pre) }}</template>
+                @endisset
+
+        </el-input>
 </el-form-item>

@@ -2,9 +2,6 @@
 
 return [
 
-    // token that can access the whole system
-    'api_token' => env('API_TOKEN'),
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -83,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh',
 
     /*
     |--------------------------------------------------------------------------

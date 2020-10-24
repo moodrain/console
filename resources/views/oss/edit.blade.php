@@ -1,19 +1,17 @@
 @extends('layout.frame')
 
-@include('piece.edit-title')
+@section('title', 'OSS edit')
 
 @section('main')
 <el-row>
     <el-col :xs="{span:22,offset:1}" :lg="8">
         <el-card>
             <el-form>
-                <x-select exp="model:form.bucket;label:Bucket;data:buckets" />
-                <x-input exp="model:form.path;label:Path" />
-                <el-form-item label="Content">
-                    <el-input type="textarea" :autosize="{minRows:2,maxRows:20}" v-model="form.content" ></el-input>
-                </el-form-item>
+                <x-select exp="model:form.bucket;label:bucket;data:buckets" />
+                <x-input exp="model:form.path;label:path" />
+                <x-input exp="model:form.content;label:content;type:textarea;row:20" />
                 <el-form-item>
-                    <el-button @click="save">{{ request('file') ? 'Save' : 'Create' }}</el-button>
+                    <el-button @click="save">{{ request('file') ? ___('save') : ___('create') }}</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-upload
@@ -23,7 +21,7 @@
                         :with-credentials="true"
                         :before-upload="uploadCheck"
                     >
-                        <el-button slot="trigger">Upload File</el-button>
+                        <el-button slot="trigger">{{ ____('upload file') }}</el-button>
                     </el-upload>
                 </el-form-item>
             </el-form>
@@ -80,7 +78,7 @@ new Vue({
                 return '/oss/upload?bucket=' + this.form.bucket + '&path=' + this.form.path
             }
         }
-    }
+    },
 })
 </script>
 @endsection

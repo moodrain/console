@@ -1,20 +1,15 @@
 @extends('layout.frame')
 
-@section('title', 'Dashboard')
+@section('title', 'home')
 
 @section('main')
     <el-row>
-        <el-col :xs="24" :lg="8">
+        <el-col :xs="{span:18,offset:3}" :span="8" :offset="8">
             <br />
             <el-card>
                 <br />
-                <p>Greeting {{ user()->name }}</p>
-                <el-divider></el-divider>
-                @if($key)
-                    <el-button class="clipboard-btn" icon="el-icon-document" data-clipboard-text="{!! $key !!}"></el-button>
-                @else
-                    <el-button @click="$to({genKey: true})">Generate Key</el-button>
-                @endif
+                <p>{{ ___('greet') }} {{ user()->name }}</p>
+                <br />
             </el-card>
         </el-col>
     </el-row>
@@ -26,8 +21,15 @@ new Vue({
     el: '#app',
     data () {
         return {
-            menuActive: 'dashboard'
+            @include('piece.data')
+            menuActive: 'home'
         }
+    },
+    methods: {
+        @include('piece.method')
+    },
+    mounted() {
+        @include('piece.init')
     }
 })
 </script>

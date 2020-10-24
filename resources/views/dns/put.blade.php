@@ -8,13 +8,12 @@
             <el-card>
 
                 <el-form>
-
-                    <x-input exp="model:form.domain;pre:Domain"></x-input>
-                    <x-input exp="model:form.rr;pre:RR"></x-input>
-                    <x-input exp="model:form.value;pre:Value"></x-input>
-                    <x-select exp="model:form.type;data:types;label:Type"></x-select>
+                    <x-input exp="model:form.domain;pre:domain"></x-input>
+                    <x-input exp="model:form.rr;pre:rr"></x-input>
+                    <x-input exp="model:form.value;pre:value"></x-input>
+                    <x-select exp="model:form.type;data:types;label:type"></x-select>
                     <el-form-item>
-                        <el-button @click="$submit(form)">Put</el-button>
+                        <el-button @click="$submit(form)">{{ ___('save') }}</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -22,7 +21,7 @@
 
             <br />
             <el-card v-if="result">
-                <p slot="header">Result</p>
+                <p slot="header">{{ ___('result') }}</p>
                 <el-input v-model="result" type="textarea" autosize></el-input>
             </el-card>
 
@@ -57,6 +56,5 @@ let vue = new Vue({
         @include('piece.init')
     }
 })
-$enter(() => $submit(vue.form))
 </script>
 @endsection

@@ -8,12 +8,10 @@
             <el-card>
 
                 <el-form>
-                    <x-input exp="model:form.url;pre:Url"></x-input>
+                    <x-input exp="model:form.url;pre:url"></x-input>
+                    <x-switch exp="model:form.isDir;on:directory;off:file" />
                     <el-form-item>
-                        <el-switch v-model="form.isDir" active-text="目录" inactive-text="文件"></el-switch>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button @click="$submit(form)">Refresh</el-button>
+                        <el-button @click="$submit(form)">{{ ___('refresh') }}</el-button>
                     </el-form-item>
                 </el-form>
 
@@ -21,7 +19,7 @@
 
             <br />
             <el-card v-if="result">
-                <p slot="header">Result</p>
+                <p slot="header">{{ ___('result') }}</p>
                 <el-input v-model="result" type="textarea" autosize></el-input>
             </el-card>
 
@@ -53,6 +51,5 @@ let vue = new Vue({
         @include('piece.init')
     }
 })
-$enter(() => $submit(vue.form))
 </script>
 @endsection

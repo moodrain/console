@@ -1,20 +1,21 @@
 @extends('layout.app')
-@section('title', 'Register')
+@section('title', 'register')
 @section('html')
+    <div id="loading" style="position: absolute;z-index: 3000;background: #b4f3f4;width: 100%;height: 100%"></div>
     <div id="app">
         <br />
         <el-row>
-            <el-col :xs="{span:20,offset:2}" :lg="{span:6,offset:9}">
+            <el-col :span="6" :offset="9" :xs="{span:20,offset:2}">
                 <el-card>
                     <el-form>
-                        <x-input exp="model:form.email;pre:Email"></x-input>
-                        <x-input exp="model:form.name;pre:Name"></x-input>
-                        <x-input exp="model:form.password;pre:Password;type:password"></x-input>
-                        <x-input exp="model:form.rePassword;pre:RePassword;type:password"></x-input>
+                        <x-input exp="model:form.email;pre:email" />
+                        <x-input exp="model:form.name;pre:name" />
+                        <x-input exp="model:form.password;pre:password;type:password" />
+                        <x-input exp="model:form.rePassword;pre:re-password;type:password" />
                         <el-form-item>
-                            <el-button @click="register">Register</el-button>
+                            <el-button @click="register">{{ ___('register') }}</el-button>
                             <el-divider direction="vertical"></el-divider>
-                            <el-link href="/login">or Login</el-link>
+                            <el-link href="/login">{{ ___('login') }}</el-link>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -24,11 +25,11 @@
 @endsection
 
 @section('js')
-    @include('layout.js')
+    @include('common.js')
     <script>
         let vue = new Vue({
             el: '#app',
-            data () {
+            data() {
                 return {
                     @include('piece.data')
                     form: {
@@ -41,13 +42,13 @@
             },
             methods: {
                 @include('piece.method')
-                register () {
+                register() {
                     if (! this.form.email || ! this.form.password || ! this.form.name) {
-                        alert('some inputs are empty')
+                        alert('{{ __('msg.form-not-finished') }}')
                         return
                     }
                     if (this.form.password != this.form.rePassword) {
-                        alert('password not equal re password')
+                        alert('{{ __('msg.password-not-equal') }}')
                         return
                     }
                     $submit(this.form)
@@ -62,5 +63,5 @@
 @endsection
 
 @section('css')
-    @include('layout.css')
+    @include('common.css')
 @endsection

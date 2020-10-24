@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
 use Illuminate\Support\Str;
 
@@ -64,4 +65,17 @@ class Model extends LaravelModel
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function fill(array $attributes)
+    {
+        $totallyGuarded = $this->totallyGuarded();
+        foreach ($this->fillableFromArray($attributes) as $key => $value) {
+            $key = Str::snake($key);
+            if ($this->isFillable($key)) {
+                $this->setAttribute($key, $value);
+            } elseif ($totallyGuarded) {
+                throw new MassAssignmentException(sprintf('Add [%s] to fillable property to allow mass assignment on [%s].', $key, get_class($this)));
+            }
+        }
+        return $this;
+    }
 }

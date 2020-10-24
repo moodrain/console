@@ -2,73 +2,45 @@
 
 use Illuminate\Support\Facades\Route;
 
-if (env('ICP')) {
-    Route::view('/login', 'icp.login')->name('login');
-    Route::any('/', function() { return view('icp.index'); });
-} else {
-    Route::view('/login', 'user.login')->name('login');
-}
-Route::post('login', 'UserController@login');
-
-Route::prefix('oa')->group(function() {
-
-    Route::get('qq', 'OAController@qq');
-
-    Route::prefix('callback')->group(function() {
-
-        Route::get('qq/{application}', 'OAController@qqCallback');
-
-    });
-
-});
-
+Route::any('login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
+//Route::any('register', [\App\Http\Controllers\UserController::class, 'register']);
 
 Route::middleware(['auth'])->group(function() {
 
-    ! env('ICP') && Route::get('/', 'IndexController@index');
+    Route::view('/', 'index');
+    Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout']);
 
-
-    Route::post('logout', 'UserController@logout');
-
-    Route::get('application/list', 'ApplicationController@list');
-    Route::any('application/edit', 'ApplicationController@edit');
-    Route::post('application/destroy', 'ApplicationController@destroy');
-    Route::post('application/deploy', 'ApplicationController@deploy');
-
-    Route::get('json-storage/list', 'JsonStorageController@list');
-    Route::any('json-storage/edit', 'JsonStorageController@edit');
-    Route::post('json-storage/destroy', 'JsonStorageController@destroy');
-
-    Route::get('log/list', 'LogController@list');
-    Route::post('log/destroy', 'LogController@destroy');
-
-    Route::get('wx-msg-temp/list', 'WxMsgTempController@list');
-    Route::any('wx-msg-temp/edit', 'WxMsgTempController@edit');
-    Route::post('wx-msg-temp/destroy', 'WxMsgTempController@destroy');
-
-    Route::get('wx-mini-program/list', 'WxMiniProgramController@list');
-    Route::any('wx-mini-program/edit', 'WxMiniProgramController@edit');
-    Route::post('wx-mini-program/destroy', 'WxMiniProgramController@destroy');
-
-    Route::view('cdn/refresh', 'cdn.refresh');
-    Route::post('cdn/refresh', 'CDNController@refresh');
+    Route::any('app/deploy', [\App\Http\Controllers\ApplicationController::class, 'deploy']);
 
     Route::view('dns/put', 'dns.put');
-    Route::post('dns/put', 'DNSController@put');
+    Route::post('dns/put', [\App\Http\Controllers\DNSController::class, 'put']);
 
-    Route::get('oss-bucket/list', 'OssBucketController@list');
-    Route::post('oss-bucket/create', 'OssBucketController@create');
-    Route::post('oss-bucket/drop', 'OssBucketController@drop');
-    Route::post('oss-bucket/acl', 'OssBucketController@acl');
-    Route::post('oss-bucket/refresh', 'OssBucketController@refresh');
+    Route::view('cdn/refresh', 'cdn.refresh');
+    Route::post('cdn/refresh', [\App\Http\Controllers\CDNController::class, 'refresh']);
 
-    Route::get('oss/list', 'OssController@list');
-    Route::any('oss/edit', 'OssController@edit');
-    Route::any('oss/delete', 'OssController@delete');
-    Route::post('oss/upload', 'OssController@upload');
+    Route::get('db-backup/connection/list', [\App\Http\Controllers\DbBackup\ConnectionController::class, 'list']);
+    Route::any('db-backup/connection/edit', [\App\Http\Controllers\DbBackup\ConnectionController::class, 'edit']);
+    Route::post('db-backup/connection/destroy', [\App\Http\Controllers\DbBackup\ConnectionController::class, 'destroy']);
 
+    Route::get('db-backup/database/list', [\App\Http\Controllers\DbBackup\DatabaseController::class, 'list']);
+    Route::any('db-backup/database/edit', [\App\Http\Controllers\DbBackup\DatabaseController::class, 'edit']);
+    Route::post('db-backup/database/destroy', [\App\Http\Controllers\DbBackup\DatabaseController::class, 'destroy']);
+
+    Route::get('db-backup/task/list', [\App\Http\Controllers\DbBackup\TaskController::class, 'list']);
+    Route::any('db-backup/task/edit', [\App\Http\Controllers\DbBackup\TaskController::class, 'edit']);
+    Route::post('db-backup/task/destroy', [\App\Http\Controllers\DbBackup\TaskController::class, 'destroy']);
+
+    Route::get('oss-bucket/list', [\App\Http\Controllers\OssBucketController::class, 'list']);
+    Route::post('oss-bucket/create', [\App\Http\Controllers\OssBucketController::class, 'create']);
+    Route::post('oss-bucket/destroy', [\App\Http\Controllers\OssBucketController::class, 'destroy']);
+    Route::post('oss-bucket/acl', [\App\Http\Controllers\OssBucketController::class, 'acl']);
+
+    Route::get('oss/list', [\App\Http\Controllers\OssController::class, 'list']);
+    Route::any('oss/edit', [\App\Http\Controllers\OssController::class, 'edit']);
+    Route::any('oss/destroy', [\App\Http\Controllers\OssController::class, 'destroy']);
+    Route::post('oss/upload', [\App\Http\Controllers\OssController::class, 'upload']);
 
 });
 
-Route::view('wr/gui', 'word.read')->withoutMiddleware('web');
-Route::get('wr/{text?}', 'Api\WordController@read')->withoutMiddleware('web');
+
+require __DIR__ . '/admin.php';

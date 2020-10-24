@@ -1,35 +1,39 @@
 <?php
 
+$helper = new \App\Helpers\NavHelper();
+
 return [
 
-    // 0 => index, 1 => name, 2 => url/submenu
+    'admin' => [
+        'nav' => [],
+    ],
+
+    'user' => [
+        'nav' => [
+            'pc' => [
+                ['app-deploy', 'application', 'app/deploy'],
+                ['dns', 'DNS', 'dns/put'],
+                ['oss', 'OSS', [
+                    ['oss-list', 'Oss list', 'oss/list'],
+                    ['oss-edit', 'Oss edit', 'oss/edit'],
+                    ['oss-bucket-list', 'Bucket list', 'oss-bucket/list'],
+                ]],
+                ['cdn', 'CDN', 'cdn/refresh'],
+                ['db-backup', 'db-backup', [
+                    ['db-backup_task-list', 'task list', 'db-backup/task/list'],
+                    ['db-backup_task-edit', 'task edit', 'db-backup/task/edit'],
+                    ['db-backup_database-list', 'database list', 'db-backup/database/list'],
+                    ['db-backup_database-edit', 'database edit', 'db-backup/database/edit'],
+                    ['db-backup_connection-list', 'connection list', 'db-backup/connection/list'],
+                    ['db-backup_connection-edit', 'connection edit', 'db-backup/connection/edit'],
+                ]]
+            ],
+            'mobile' => [],
+        ],
+    ],
+
     'nav' => [
-        ['dashboard', 'Dashboard', ''],
-        ['application', 'Application', [
-            ['application-list', 'App List', 'application/list'],
-            ['application-edit', 'App Edit', 'application/edit'],
-        ]],
-        ['dns', 'DNS', 'dns/put'],
-        ['oss', 'OSS', [
-            ['oss-list', 'OSS List', 'oss/list'],
-            ['oss-edit', 'OSS Edit', 'oss/edit'],
-            ['oss-bucket-list', 'OSS Bucket', 'oss-bucket/list'],
-        ]],
-        ['cdn', 'CDN', 'cdn/refresh'],
-        ['log-list', 'Log', 'log/list'],
-        ['json-storage', 'Json Storage', [
-            ['json-storage-list', 'Json List', 'json-storage/list'],
-            ['json-storage-edit', 'Json Edit', 'json-storage/edit'],
-        ]],
-        ['wx-mini-program', 'Wx Mini Program', [
-            ['wx-mini-program-list', 'MP List', 'wx-mini-program/list'],
-            ['wx-mini-program-edit', 'MP Edit', 'wx-mini-program/edit'],
-        ]],
-        ['wx-msg-temp', 'Wx Msg Temp', [
-            ['wx-msg-temp-list', 'Temp List', 'wx-msg-temp/list'],
-            ['wx-msg-temp-edit', 'Temp Edit', 'wx-msg-temp/edit'],
-        ]],
-        ['word-read', 'Word Read', 'wr/gui']
+        'auth' => [],
     ],
 
     /*

@@ -10,7 +10,7 @@ class CDNController extends Controller
     {
         $this->validate(request(), [
             'url' => 'required',
-            'isDir' => 'in:true,false',
+            'isDir' => 'bool',
         ]);
         $data = request()->all();
         $data['isDir'] = $data['isDir'] == 'true' ? true : false;
@@ -32,5 +32,12 @@ class CDNController extends Controller
         } catch (\Exception $e) {
             return $this->backErr($e->getMessage());
         }
+    }
+
+    protected function initAliClient($regionId = 'cn-hangzhou')
+    {
+        AlibabaCloud::accessKeyClient(config('aliyun.accessKeyId'), config('aliyun.accessKeySecret'))
+            ->regionId($regionId)
+            ->asDefaultClient();
     }
 }

@@ -10,7 +10,7 @@
     @endisset
 
     @isset($label)
-        label="{{ $label }}"
+        label="{{ ____($label) }}"
     @endisset
 
     @isset($ref)

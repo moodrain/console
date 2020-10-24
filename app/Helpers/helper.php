@@ -44,15 +44,6 @@ if (! function_exists('ers'))
     }
 }
 
-if (! function_exists('errBack'))
-{
-    function errBack($msg)
-    {
-        return redirect()->back()->withInput()->withErrors(__($msg));
-    }
-}
-
-
 if (! function_exists('user'))
 {
     function user()
@@ -169,5 +160,30 @@ if (! function_exists('endWith'))
     function endWith($end, $str)
     {
         return mb_substr($str, mb_strlen($str) - 1, 1) == $end ? $str : ($str . $end);
+    }
+}
+
+if (! function_exists('mobile'))
+{
+    function mobile()
+    {
+        return \Illuminate\Support\Str::of(request()->userAgent())->contains(['mobile', 'Mobile']);
+    }
+}
+
+if (! function_exists('___'))
+{
+    function ___($word)
+    {
+        $rs = __('word.' . $word);
+        return \Illuminate\Support\Str::startsWith($rs, 'word.') ? $word : $rs;
+    }
+}
+
+if (! function_exists('____'))
+{
+    function ____($words)
+    {
+        return collect(explode(' ', $words))->map(function($e) { return ___($e); })->join(' ');
     }
 }

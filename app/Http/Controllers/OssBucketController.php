@@ -7,17 +7,18 @@ use OSS\OssClient;
 
 class OssBucketController extends Controller
 {
-
-    protected $model = 'oss-bucket';
-
     public function list()
     {
         $buckets = $this->oss->buckets();
-        $d = [];
-        foreach($buckets as $bucket) {
-            $d[] = ['name' => $bucket];
+        $list = [];
+        $prod = app()->environment('production');
+        foreach ($buckets as $bucket) {
+            $list[] = [
+                'name' => $bucket->getName(),
+                'acl' => $this->oss->client($prod ? $bucket->getIntranetEndpoint() : $bucket->getExtranetEndpoint())->getBucketAcl($bucket->getName()),
+            ];
         }
-        return $this->view('list', compact('d'));
+        return $this->view('oss-bucket.list', ['l' => $list]);
     }
 
     public function create()
@@ -34,9 +35,9 @@ class OssBucketController extends Controller
         }
     }
 
-    public function drop()
+    public function destroy()
     {
-        $this->validate(request(), ['name' => 'required',]);
+        $this->validate(request(), ['name' => 'required']);
         try {
             $this->oss->dropBucket(request('name'));
             return $this->backOk();
@@ -59,19 +60,11 @@ class OssBucketController extends Controller
         }
     }
 
-    public function refresh()
-    {
-        $buckets = $this->oss->buckets();
-        cache()->set('oss-bucket', $buckets);
-        return $this->backOk();
-    }
-
     private $oss;
 
-    public function __construct()
+    public function __construct(OssService $oss)
     {
         parent::__construct();
-        $this->oss = new OssService();
+        $this->oss = $oss;
     }
-
 }
