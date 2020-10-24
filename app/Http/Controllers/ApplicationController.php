@@ -12,7 +12,7 @@ class ApplicationController extends Controller
         $this->vld(['path' => 'required']);
         $path = request('path');
         try {
-            expIf(! chdir($path), 'path not-found');
+            chdir($path);
             exec('git pull', $output, $code);
             expIf($code !== 0, 'git pull failed: ' . join(PHP_EOL, $output));
             return $this->viewOk('app.deploy', ['path' => request('path')]);
