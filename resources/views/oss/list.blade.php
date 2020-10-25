@@ -23,7 +23,7 @@
 <el-card>
 
     <el-table v-if="directories.length > 0" :data="directories" max-height="500" border>
-        <el-table-column label="Directory">
+        <el-table-column label="{{ ___('directory') }}">
             <template slot-scope="scope">
                 <p @click="pendDir(scope.row)">@{{ scope.row.name }}</p>
             </template>
@@ -33,8 +33,8 @@
     <br />
 
     <el-table v-if="files.length > 0" :data="files" max-height="500" border>
-        <el-table-column prop="name" label="File"></el-table-column>
-        <el-table-column label="Operation">
+        <el-table-column prop="name" label="{{ ___('file') }}"></el-table-column>
+        <el-table-column label="{{ ___('operation') }}">
             <template slot-scope="scope">
                 <el-button icon="el-icon-view" @click="view(scope.row)"></el-button>
                 <el-button icon="el-icon-edit" @click="edit(scope.row)"></el-button>
