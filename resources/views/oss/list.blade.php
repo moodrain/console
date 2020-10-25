@@ -12,7 +12,7 @@
     <el-form inline>
         <el-form-item><el-button icon="el-icon-back" @click="parentPath"></el-button></el-form-item>
         <x-select exp="model:search.bucket;data:buckets;change:toBucket" />
-        <x-input exp="model:search.path;pre:Path" />
+        <x-input exp="model:search.path;pre:path" />
         <el-button icon="el-icon-search" @click="doSearch"></el-button>
         <el-button icon="el-icon-plus" @click="add"></el-button>
         <el-button icon="el-icon-refresh-left" @click="refreshBucket"></el-button>

@@ -11,11 +11,10 @@ class OssBucketController extends Controller
     {
         $buckets = $this->oss->buckets();
         $list = [];
-        $prod = app()->environment('production');
         foreach ($buckets as $bucket) {
             $list[] = [
                 'name' => $bucket->getName(),
-                'acl' => $this->oss->client($prod ? $bucket->getIntranetEndpoint() : $bucket->getExtranetEndpoint())->getBucketAcl($bucket->getName()),
+                'acl' => $this->oss->client($bucket->getExtranetEndpoint())->getBucketAcl($bucket->getName()),
             ];
         }
         return $this->view('oss-bucket.list', ['l' => $list]);
