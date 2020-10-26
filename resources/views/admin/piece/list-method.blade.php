@@ -9,7 +9,7 @@ doDelete(id) {
         }).then(() => {
             let ids = []
             this.selects.forEach(e => ids.push(e.id))
-            $submit('/{{ $prefix }}/destroy', {ids})
+            $submit('/{{ $prefix }}destroy', {ids})
         }).catch(() => {})
     } else {
         this.$confirm('{{ ____('confirm delete ' . $mBase) }} ?', '{{ ___('confirm') }}', {
@@ -17,7 +17,7 @@ doDelete(id) {
             cancelButtonText: '{{ ___('cancel') }}',
             type: 'warning',
         }).then(() => {
-            $submit('/{{ $prefix }}/destroy', {id})
+            $submit('/{{ $prefix }}destroy', {id})
         }).catch(() => {})
     }
 },

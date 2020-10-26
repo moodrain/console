@@ -25,7 +25,7 @@
     <el-table v-if="directories.length > 0" :data="directories" max-height="500" border>
         <el-table-column label="{{ ___('directory') }}">
             <template slot-scope="scope">
-                <p @click="pendDir(scope.row)">@{{ scope.row.name }}</p>
+                <div style="cursor: pointer" @click="pendDir(scope.row)">@{{ scope.row.name }}</div>
             </template>
         </el-table-column>
     </el-table>

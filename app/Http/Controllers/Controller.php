@@ -91,12 +91,14 @@ class Controller extends BaseController
 
     protected function urlPrefix()
     {
-        return str_replace('_', '/', $this->prefix());
+        $prefix = str_replace('_', '/', $this->prefix());
+        return $prefix ? endWith('/', $prefix) : '';
     }
 
     protected function viewPrefix()
     {
-        return str_replace('_', '.', $this->prefix());
+        $prefix = str_replace('_', '.', $this->prefix());
+        return $prefix ? endWith('.', $prefix) : '';
     }
 
     protected function table()
@@ -115,7 +117,7 @@ class Controller extends BaseController
         ];
         empty($para['d']) && $initPara['d'] = null;
         empty($para['l']) && $initPara['l'] = [];
-        return view($this->viewPrefix() . '.' . $view, array_merge($initPara, $para));
+        return view($this->viewPrefix() . $view, array_merge($initPara, $para));
     }
 
     protected function viewOk($view, $para = [])
@@ -125,7 +127,7 @@ class Controller extends BaseController
 
     protected function directOk($uri)
     {
-        return redirect($this->urlPrefix() . '/' . $uri)->with('msg', __('msg.success'));
+        return redirect($this->urlPrefix() . $uri)->with('msg', __('msg.success'));
     }
 
     protected function backOk()
