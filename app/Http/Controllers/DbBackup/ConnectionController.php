@@ -46,6 +46,7 @@ class ConnectionController extends Controller
     public function store()
     {
         $item = $this->builder()->newModelInstance(request()->only(array_keys($this->rules)));
+        $item->password = encrypt(request('password'));
         $item->save();
         return $this->directOk('list');
     }
