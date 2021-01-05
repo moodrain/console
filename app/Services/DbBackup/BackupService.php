@@ -81,7 +81,7 @@ class BackupService
 
     public function getReadyTasks()
     {
-        return Task::query()->where(function ($q) {
+        return Task::query()->where('on', true)->where(function ($q) {
             $q->whereNull('last_run_at')->orWhereRaw('unix_timestamp() - unix_timestamp(last_run_at) > backup_interval');
         })->get();
     }
