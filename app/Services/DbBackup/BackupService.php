@@ -54,6 +54,7 @@ class BackupService
             }
         }
         $db->sqlDump($database, $file, $task);
+        filesize($file) < 100 && unlink($file);
         $task->update(['lastRunAt' => Carbon::now()]);
     }
 
@@ -65,10 +66,14 @@ class BackupService
         $ossPath = config('db-backup.oss.path') . '/' . $database->connectionKey;
         $localFile = storage_path('app/db-backup/' . $database->connectionKey . '.sql');
         $db->sqlDump($task->database, $localFile, $task);
+        if (filesize($localFile) < 100) {
+            return;
+        }
         try {
             $files = $oss->files($bucket, $ossPath);
             if (count($files) >= $task->backupKeepCount) {
-                $rmFiles = array_splice($files, count($files) - $task->backupKeepCount + 1);
+                $rmFiles = array_splice($files, 0, count($files) - $task->backupKeepCount + 1);
+                dd($files, $rmFiles);
                 foreach ($rmFiles as $rmFile) {
                     $oss->delete($bucket, $ossPath . '/' . $rmFile);
                 }

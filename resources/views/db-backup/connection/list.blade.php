@@ -21,7 +21,7 @@
         <x-sort />
         @include('admin.piece.list-head-btn')
     </el-form>
-    <el-divider></el-divider>mo
+    <el-divider></el-divider>
     <el-table :data="list" height="560" border  @selection-change="selectChange">
         <el-table-column type="selection" width="55"></el-table-column>
         <x-table-col :cols="$cols" />
