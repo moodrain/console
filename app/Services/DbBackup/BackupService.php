@@ -73,7 +73,6 @@ class BackupService
             $files = $oss->files($bucket, $ossPath);
             if (count($files) >= $task->backupKeepCount) {
                 $rmFiles = array_splice($files, 0, count($files) - $task->backupKeepCount + 1);
-                dd($files, $rmFiles);
                 foreach ($rmFiles as $rmFile) {
                     $oss->delete($bucket, $ossPath . '/' . $rmFile);
                 }
