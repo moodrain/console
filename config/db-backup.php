@@ -2,7 +2,7 @@
 
 return [
     'oss' => [
-        'bucket' => 'moodrain-backup',
+        'bucket' => env('BACKUP_OSS_BUCKET='),
         'path' => 'db-backup',
     ],
 ];

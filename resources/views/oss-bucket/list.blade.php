@@ -57,12 +57,12 @@
                 this.$submit('/oss-bucket/create', this.form)
             },
             destroy(bucket) {
-                this.$confitm('{{ ___('confirm') }}').then(() => {
+                this.$confirm('{{ ___('confirm') }}').then(() => {
                     this.$submit('/oss-bucket/destroy', {name: bucket.name})
                 }).catch(() => {})
             },
             setAcl(bucket, acl) {
-                this.$confitm('{{ ___('confirm') }}').then(() => {
+                this.$confirm('{{ ___('confirm') }}').then(() => {
                     this.$submit('/oss-bucket/acl', {name: bucket.name, acl})
                 }).catch(() => {})
             }
