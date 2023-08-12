@@ -75,7 +75,7 @@
                 this.$to('/oss/edit', {bucket: this.search.bucket, path: this.search.path + '/'})
             },
             edit(file) {
-                this.$to('/oss/edit', {bucket: this.search.bucket, file: this.search.path + '/' + file.name})
+                this.$to('/oss/edit', {bucket: this.search.bucket, file: (this.search.path ? (this.search.path + '/') : '') + file.name})
             },
             remove(file) {
                 this.$confirm('{{ ___('confirm') }}').then(() => {

@@ -38,7 +38,7 @@ new Vue({
         return {
             menuActive: 'oss-edit',
             @include('piece.data')
-            buckets: @json(cache('oss-bucket', [])),
+            buckets: @json($buckets),
             form: {
                 bucket: '{{ old('bucket') ?? request('bucket') }}',
                 path: '{{ old('path') ?? request('file') ?? request('path') }}',

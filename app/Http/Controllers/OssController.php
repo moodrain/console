@@ -40,7 +40,8 @@ class OssController extends Controller
     public function edit()
     {
         if (request()->isMethod('get')) {
-            return $this->view('oss.edit');
+            $buckets = $this->oss->buckets();
+            return $this->view('oss.edit', ['buckets' => $buckets]);
         }
         $this->validate(request(), [
             'path' => 'required',
